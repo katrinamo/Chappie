@@ -13,6 +13,7 @@ description = """
 """
 
 initial_extensions = [
+    'cogs.feeds',
     'cogs.general',
     'cogs.gif',
     'cogs.imgur',
