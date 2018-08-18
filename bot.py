@@ -35,7 +35,8 @@ class Chappie(commands.AutoShardedBot):
             try:
                 self.load_extension(extension)
             except Exception as e:
-                print(f'Failed to load extension {extension}.', file=sys.stderr)
+                print(
+                    f'Failed to load extension {extension}.', file=sys.stderr)
                 traceback.print_exc()
 
     async def send_cmd_help(self, ctx):
@@ -65,7 +66,9 @@ class Chappie(commands.AutoShardedBot):
         elif isinstance(error, commands.CommandInvokeError):
             print(f'In {ctx.command.qualified_name}:', file=sys.stderr)
             traceback.print_tb(error.original.__traceback__)
-            print(f'{error.original.__class__.__name__}: {error.original}', file=sys.stderr)
+            print(
+                f'{error.original.__class__.__name__}: {error.original}',
+                file=sys.stderr)
 
     async def on_ready(self):
         users = len(set(self.get_all_members()))
