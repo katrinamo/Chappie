@@ -21,7 +21,8 @@ initial_extensions = [
     'cogs.player',
     'cogs.serverinfo',
     'cogs.urban',
-    'cogs.userinfo'
+    'cogs.userinfo',
+    'cogs.custom commands.hac'
 ]
 
 
