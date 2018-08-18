@@ -33,10 +33,7 @@ class Owner:
         """Unloads a cog commands."""
 
         if ctx.invoked_subcommand is None:
-            help_name = self.bot.help_attrs['name']
-            prefix = self.bot.command_prefix
-            return await ctx.send(f"Please select a subcommand. "
-                                  f"If you're not sure how, type `{prefix}{help_name} {ctx.invoked_with}`.")
+            await self.bot.send_cmd_help(ctx)
 
     @unload.command(name="cog")
     @commands.is_owner()
@@ -88,7 +85,8 @@ class Owner:
     async def set(self, ctx):
         """Set commands."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @set.command()
     @commands.is_owner()

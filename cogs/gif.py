@@ -15,7 +15,8 @@ class Gif:
     async def gif(self, ctx):
         """Gif commands."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @gif.command()
     async def top(self, ctx, *, search_terms: str):

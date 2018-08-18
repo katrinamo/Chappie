@@ -43,7 +43,8 @@ class Mod:
     async def mute(self, ctx):
         """Mutes user in the channel/server."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @mute.command(name="channel")
     async def mute_channel(self, ctx, user: discord.Member, channel: discord.TextChannel = None):
@@ -76,7 +77,8 @@ class Mod:
     async def unmute(self, ctx):
         """Unmutes user in the channel/server."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @unmute.command(name="channel")
     async def unmute_channel(self, ctx, user: discord.Member, channel: discord.TextChannel = None):

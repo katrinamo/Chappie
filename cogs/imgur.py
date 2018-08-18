@@ -16,7 +16,8 @@ class Imgur:
     async def imgur(self, ctx):
         """Imgur commands."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @imgur.command()
     async def top(self, ctx, search_terms: str):

@@ -12,7 +12,8 @@ class Userinfo:
     async def _user(self, ctx):
         """User commands."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @_user.command(name='info')
     async def _info(self, ctx, *, user: discord.Member = None):
