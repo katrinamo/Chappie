@@ -94,5 +94,5 @@ class Serverinfo:
 
 
 def setup(bot):
-    cog = Server(bot)
+    cog = Serverinfo(bot)
     bot.add_cog(cog)
