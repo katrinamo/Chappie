@@ -1,8 +1,7 @@
 import base64
 import datetime
 import time
-from random import choice
-from random import randint
+from random import choice, randint
 
 import discord
 from discord.ext import commands
