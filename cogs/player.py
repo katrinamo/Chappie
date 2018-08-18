@@ -119,5 +119,5 @@ class Music:
 
 
 def setup(bot):
-    n = Music(bot)
-    bot.add_cog(n)
+    cog = Music(bot)
+    bot.add_cog(cog)
