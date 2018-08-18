@@ -59,7 +59,7 @@ class Modlog:
             self.save_settings()
 
     def save_settings(self):
-        dataIO.save_json("data/feeds/settings.json", self.settings)
+        dataIO.save_json("data/modlog/settings.json", self.settings)
 
     @commands.group()
     @commands.has_permissions(manage_channels=True)
