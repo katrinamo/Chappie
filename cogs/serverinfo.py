@@ -2,8 +2,8 @@ import discord
 from discord.ext import commands
 
 
-class Server:
-    """Server commands."""
+class Serverinfo:
+    """Serverinfo commands."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -12,7 +12,8 @@ class Server:
     async def server(self, ctx):
         """Server commands."""
 
-        await self.bot.send_cmd_help(ctx)
+        if ctx.invoked_subcommand is None:
+            await self.bot.send_cmd_help(ctx)
 
     @server.command()
     async def info(self, ctx):
