@@ -13,6 +13,15 @@ description = """
 """
 
 initial_extensions = [
+    'cogs.general',
+    'cogs.gif',
+    'cogs.imgur',
+    'cogs.mod',
+    'cogs.owner',
+    'cogs.player',
+    'cogs.serverinfo',
+    'cogs.urban',
+    'cogs.userinfo'
 ]
 
 
