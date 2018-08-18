@@ -70,4 +70,5 @@ class Userinfo:
 
 
 def setup(bot):
-    bot.add_cog(Userinfo(bot))
+    cog = Userinfo(bot)
+    bot.add_cog(cog)
