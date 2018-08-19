@@ -21,15 +21,19 @@ class Modlog:
 
         guild = member.guild
 
-        await self.modlog_remove(guild, member)
+        try:
+            modlog_channel = self.settings[str(guild.id)]['mod-log_channel']
+            channel = discord.utils.get(
+                guild.text_channels, name=modlog_channel)
+            msg = f"{member.name} left the server!"
+            await channel.send(msg)
+
+        except:
+            pass
 
     async def on_member_join(self, member):
 
         guild = member.guild
-
-        await self.modlog_join(guild, member)
-
-    async def modlog_join(self, guild, member):
 
         try:
             modlog_channel = self.settings[str(guild.id)]['mod-log_channel']
@@ -38,19 +42,7 @@ class Modlog:
             msg = f"{member.mention} joined the server!"
             await channel.send(msg)
 
-        except BaseException:
-            pass
-
-    async def modlog_remove(self, guild, member):
-
-        try:
-            modlog_channel = self.settings[str(guild.id)]['mod-log_channel']
-            channel = discord.utils.get(
-                guild.text_channels, name=modlog_channel)
-            msg = f"{member.name} left the server!"
-            await channel.send(msg)
-
-        except BaseException:
+        except:
             pass
 
     def add_server(self, guild):
