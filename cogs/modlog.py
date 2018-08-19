@@ -61,16 +61,8 @@ class Modlog:
     def save_settings(self):
         dataIO.save_json("data/modlog/settings.json", self.settings)
 
-    @commands.group()
-    @commands.has_permissions(manage_channels=True)
-    async def modlog(self, ctx):
-        """Mod-log commands."""
-
-        if ctx.invoked_subcommand is None:
-            await self.bot.send_cmd_help(ctx)
-
-    @modlog.command(name='channel')
-    async def modlog_channel(self, ctx, channel: discord.TextChannel):
+    @commands.command()
+    async def modlog(self, ctx, channel: discord.TextChannel):
         """Sets the mod-log channel."""
 
         guild = ctx.guild
@@ -79,7 +71,7 @@ class Modlog:
         self.settings[str(guild.id)]['mod-log_channel'] = channel.name
         self.save_settings()
 
-        await ctx.send(f"{channel.name} is the new modlog channel.")
+        await ctx.send(f"{channel.name} is the new mod-log channel.")
 
 
 def check_folders():
