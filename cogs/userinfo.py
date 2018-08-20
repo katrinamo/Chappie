@@ -10,7 +10,6 @@ class Userinfo:
 
     @commands.group(name='user')
     async def _user(self, ctx):
-        """User commands."""
 
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
