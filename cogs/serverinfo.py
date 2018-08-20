@@ -10,7 +10,6 @@ class Serverinfo:
 
     @commands.group()
     async def server(self, ctx):
-        """Server commands."""
 
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
@@ -73,7 +72,7 @@ class Serverinfo:
 
     @server.command()
     async def emojis(self, ctx):
-        """List all emojis in this guild."""
+        """List all emojis in the guild."""
 
         guild = ctx.message.guild
         emojis = (str(x) for x in guild.emojis)
@@ -81,7 +80,7 @@ class Serverinfo:
 
     @server.command()
     async def avi(self, ctx):
-        """Retrieves the guild avatar image link."""
+        """Retrieves the guild avatar image."""
 
         guild = ctx.message.guild
         em = discord.Embed(title=None,
