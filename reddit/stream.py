@@ -1,12 +1,15 @@
 import time
 
 from prawcore.exceptions import PrawcoreException
+
 from prawbot import Praw
+from reddit.spam import Spam
 
 
 class Stream:
     def __init__(self):
         self.praw = Praw()
+        self.spam = Spam()
 
     def stream_task(self):
         subreddit = self.praw.subreddit("healthanxiety")
@@ -14,7 +17,11 @@ class Stream:
         for submission in subreddit.stream.submissions():
             self.insert_subreddit(submission.subreddit)
             self.insert_author(submission.author)
-            self.insert_submission(submission)
+            self.insert_submission(submission, 'submission')
+
+            message = submission.title + " " + submission.selftext
+            if self.spam.is_spam(message):
+                self.insert_submission(submission, 'spam_catch')
 
     def insert_subreddit(self, subreddit):
 
@@ -44,7 +51,7 @@ class Stream:
 
         self.praw.db.execute(query=query, params=params)
 
-    def insert_submission(self, submission):
+    def insert_submission(self, submission, table):
 
         if submission.author is None:
             return
@@ -58,9 +65,9 @@ class Stream:
         created = submission.created_utc
 
         query = '''
-        INSERT INTO submission (sub_id, subreddit, author, title, body, url, created, read) VALUES ($1, $2, $3, $4, $5, $6, $7, DEFAULT);
+        INSERT INTO $1 (sub_id, subreddit, author, title, body, url, created, read) VALUES ($2, $3, $4, $5, $6, $7, $8, DEFAULT);
         '''
-        params = (sub_id, subreddit, author, title, body, url, created)
+        params = (table, sub_id, subreddit, author, title, body, url, created)
 
         self.praw.db.execute(query=query, params=params)
 
