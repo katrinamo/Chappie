@@ -4,10 +4,10 @@ import asyncpg
 
 class AsyncClient:
     def __init__(self):
-        self.conn: asyncpg.Connection = None
+        self.conn = None
 
     async def connect(self, **kwargs):
-        self.conn = await asyncpg.connect(**kwargs)
+        self.conn = await asyncpg.create_pool(**kwargs)
         return self.conn
 
     async def disconnect(self):
@@ -46,4 +46,4 @@ class Database(AsyncClient):
         return self.wait(super().disconnect())
 
     def execute(self, **kwargs):
-        return self.wait(super().execute(**kwargs))
+        return super().execute(**kwargs)
