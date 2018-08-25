@@ -1,4 +1,5 @@
 import asyncio
+
 import asyncpg
 
 
@@ -45,5 +46,8 @@ class Database(AsyncClient):
     def disconnect(self):
         return self.wait(super().disconnect())
 
-    def execute(self, **kwargs):
+    def praw_execute(self, **kwargs):
+        return self.wait(super().execute(**kwargs))
+
+    def chappie_execute(self, **kwargs):
         return super().execute(**kwargs)
