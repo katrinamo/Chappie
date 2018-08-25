@@ -28,8 +28,10 @@ class Auditlog:
             for guild in self.bot.guilds:
                 async for entry in guild.audit_logs(limit=1):
                     try:
-                        last_known_id = self.settings[str(guild.id)]['last_known_id']
-                        auditlog_channel = self.settings[str(guild.id)]['audit-log_channel']
+                        last_known_id = self.settings[str(
+                            guild.id)]['last_known_id']
+                        auditlog_channel = self.settings[str(
+                            guild.id)]['audit-log_channel']
                         channel = discord.utils.get(
                             guild.text_channels, name=auditlog_channel)
 
@@ -56,9 +58,10 @@ class Auditlog:
                         em.add_field(name="Reason", value=reason)
                         em.add_field(name="Extra Information", value=extra)
                         await channel.send(embed=em)
-                        self.settings[str(guild.id)]['last_known_id'] = entry_id
+                        self.settings[str(guild.id)
+                                      ]['last_known_id'] = entry_id
                         self.save_settings()
-                    except:
+                    except BaseException:
                         pass
 
                 await asyncio.sleep(5)
