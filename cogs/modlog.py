@@ -28,7 +28,7 @@ class Modlog:
             msg = f"{member.name} left the server!"
             await channel.send(msg)
 
-        except:
+        except BaseException:
             pass
 
     async def on_member_join(self, member):
@@ -42,7 +42,7 @@ class Modlog:
             msg = f"{member.mention} joined the server!"
             await channel.send(msg)
 
-        except:
+        except BaseException:
             pass
 
     def add_server(self, guild):
