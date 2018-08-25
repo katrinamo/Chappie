@@ -7,6 +7,7 @@ import discord
 from discord.ext import commands
 
 from cogs.utils.dataIO import dataIO
+from cogs.utils.database import Database
 
 description = """
 "Philzeey's creation - Chappie"
@@ -24,12 +25,22 @@ initial_extensions = [
     'cogs.serverinfo',
     'cogs.urban',
     'cogs.userinfo',
-    'cogs.custom commands.hac'
+    'cogs.custom commands.hac',
+    'reddit.reddit'
 ]
 
 
 class Chappie(commands.AutoShardedBot):
     def __init__(self):
+        self.config = dataIO.load_json("data/chappie/config.json")
+        self.db = Database(database=self.config["DATABASE"],
+                           user=self.config["DATABASE_USER"],
+                           password=self.config["DATABASE_PASSWORD"],
+                           host=self.config["DATABASE_HOST"],
+                           port=self.config["DATABASE_PORT"])
+        self.uptime = datetime.datetime.utcnow()
+        self.session = aiohttp.ClientSession(loop=self.loop)
+
         super().__init__(command_prefix="!",
                          description=description,
                          pm_help=None,
@@ -38,10 +49,6 @@ class Chappie(commands.AutoShardedBot):
                          activity=discord.Game(name="with humans"),
                          fetch_offline_members=False,
                          help_attrs=dict(hidden=True))
-
-        self.uptime = datetime.datetime.utcnow()
-        self.session = aiohttp.ClientSession(loop=self.loop)
-        self.config = dataIO.load_json("data/chappie/config.json")
 
         for extension in initial_extensions:
             try:
@@ -106,6 +113,7 @@ class Chappie(commands.AutoShardedBot):
         print('resumed...')
 
     async def close(self):
+        await self.db.disconnect()
         await super().close()
         await self.session.close()
 
