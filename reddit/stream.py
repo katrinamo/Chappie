@@ -17,11 +17,7 @@ class Stream:
         for submission in subreddit.stream.submissions():
             self.insert_subreddit(submission.subreddit)
             self.insert_author(submission.author)
-            self.insert_submission(submission, 'submission')
-
-            message = submission.title + " " + submission.selftext
-            if self.spam.is_spam(message):
-                self.insert_submission(submission, 'spam_catch')
+            self.insert_submission(submission)
 
     def insert_subreddit(self, subreddit):
 
@@ -51,7 +47,7 @@ class Stream:
 
         self.praw.db.execute(query=query, params=params)
 
-    def insert_submission(self, submission, table):
+    def insert_submission(self, submission):
 
         if submission.author is None:
             return
@@ -65,9 +61,9 @@ class Stream:
         created = submission.created_utc
 
         query = '''
-        INSERT INTO $1 (sub_id, subreddit, author, title, body, url, created, read) VALUES ($2, $3, $4, $5, $6, $7, $8, DEFAULT);
+        INSERT INTO submission (sub_id, subreddit, author, title, body, url, created, read) VALUES ($1, $2, $3, $4, $5, $6, $7, DEFAULT);
         '''
-        params = (table, sub_id, subreddit, author, title, body, url, created)
+        params = (sub_id, subreddit, author, title, body, url, created)
 
         self.praw.db.execute(query=query, params=params)
 
