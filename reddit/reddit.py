@@ -56,7 +56,7 @@ class Reddit:
                 except BaseException:
                     pass
 
-            await asyncio.sleep(10)
+            await asyncio.sleep(3)
 
     async def find_all_channels_with_sub(self, subreddit):
         master_list = []
@@ -113,10 +113,9 @@ class Reddit:
         try:
             self.settings[str(channel.id)]['subscriptions'].remove(subreddit.lower())
             self.save_settings()
+            await ctx.send(f"{channel.name}, `ID: {channel.id}` is now unsubscribed to {subreddit}.")
         except BaseException:
             await channel.send("Error.")
-
-        await ctx.send(f"{channel.name}, `ID: {channel.id}` is now unsubscribed to {subreddit}.")
 
 
 def check_folders():
