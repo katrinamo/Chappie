@@ -13,7 +13,6 @@ class SubscriptionsUpdated(Exception):
 class Stream:
     def __init__(self):
         self.praw = Praw()
-        self.settings = dataIO.load_json("data/reddit/settings.json")
 
     def get_list_of_subs(self):
         master_list = []
@@ -25,6 +24,7 @@ class Stream:
         return master_list
 
     def stream_task(self):
+        self.settings = dataIO.load_json("data/reddit/settings.json")
         subscriptions_list = self.get_list_of_subs()
         subscriptions = '+'.join(subscriptions_list)
 
@@ -105,6 +105,9 @@ class Stream:
                 print("Subscriptions have updated, restarting...")
                 time.sleep(10)
             except PrawcoreException:
-                print("PrawcoreException occurred. Sleeping for 10 seconds.")
+                print("PrawcoreException occurred, restarting...")
+                time.sleep(10)
+            except BaseException:
+                print("Some type of exception occured, restarting...")
                 time.sleep(10)
         return 0
