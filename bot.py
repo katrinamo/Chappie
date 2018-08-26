@@ -117,4 +117,4 @@ class Chappie(commands.AutoShardedBot):
         await self.session.close()
 
     def run(self):
-        super().run(self.config["BOT_TEST_TOKEN"], reconnect=True)
+        super().run(self.config["BOT_TOKEN"], reconnect=True)
