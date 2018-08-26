@@ -22,9 +22,8 @@ initial_extensions = [
     'cogs.mod',
     'cogs.owner',
     'cogs.player',
-    'cogs.serverinfo',
     'cogs.urban',
-    'cogs.userinfo',
+    'cogs.info',
     'cogs.custom commands.hac',
     'reddit.reddit'
 ]
@@ -38,8 +37,6 @@ class Chappie(commands.AutoShardedBot):
                            password=self.config["DATABASE_PASSWORD"],
                            host=self.config["DATABASE_HOST"],
                            port=self.config["DATABASE_PORT"])
-        self.uptime = datetime.datetime.utcnow()
-        self.session = aiohttp.ClientSession(loop=self.loop)
 
         super().__init__(command_prefix="!",
                          description=description,
@@ -49,6 +46,8 @@ class Chappie(commands.AutoShardedBot):
                          activity=discord.Game(name="with humans"),
                          fetch_offline_members=False,
                          help_attrs=dict(hidden=True))
+        self.session = aiohttp.ClientSession(loop=self.loop)
+        self.uptime = datetime.datetime.utcnow()
 
         for extension in initial_extensions:
             try:
