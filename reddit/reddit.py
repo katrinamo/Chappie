@@ -36,14 +36,17 @@ class Reddit:
                 created = row['created']
 
                 description = body if len(body) < 2040 else body[:2040] + '...'
-                date = time.strftime('Posted: %m-%d-%Y at %H:%M:%S', time.localtime(created))
+                date = time.strftime(
+                    'Posted: %m-%d-%Y at %H:%M:%S',
+                    time.localtime(created))
 
                 em = discord.Embed(
                     title=title,
                     description=description,
                     url=url,
                     color=discord.Color.red())
-                em.set_footer(text=f"By {author} | r/{subreddit} | ID: {sub_id} | {date}")
+                em.set_footer(
+                    text=f"By {author} | r/{subreddit} | ID: {sub_id} | {date}")
 
                 try:
                     channel_id_list = await self.find_all_channels_with_sub(subreddit)
@@ -100,7 +103,8 @@ class Reddit:
         channel = ctx.channel
 
         self.add_channel(channel)
-        self.settings[str(channel.id)]['subscriptions'].append(subreddit.lower())
+        self.settings[str(channel.id)]['subscriptions'].append(
+            subreddit.lower())
         self.save_settings()
 
         await ctx.send(f"{channel.name}, `ID: {channel.id}` is now subscribed to {subreddit}.")
@@ -111,7 +115,8 @@ class Reddit:
 
         self.add_channel(channel)
         try:
-            self.settings[str(channel.id)]['subscriptions'].remove(subreddit.lower())
+            self.settings[str(channel.id)]['subscriptions'].remove(
+                subreddit.lower())
             self.save_settings()
             await ctx.send(f"{channel.name}, `ID: {channel.id}` is now unsubscribed to {subreddit}.")
         except BaseException:
