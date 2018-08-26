@@ -14,7 +14,6 @@ description = """
 """
 
 initial_extensions = [
-    'cogs.auditlog',
     'cogs.general',
     'cogs.images',
     'cogs.mod',
