@@ -1,3 +1,5 @@
+import os
+
 import discord
 
 from .utils.dataIO import dataIO
@@ -43,6 +45,27 @@ class Modlog:
             pass
 
 
+def check_folders():
+    folders = ("data", "data/mod/")
+    for folder in folders:
+        if not os.path.exists(folder):
+            print("Creating " + folder + " folder...")
+            os.makedirs(folder)
+
+
+def check_files():
+    files = {
+        "settings.json": {}
+    }
+
+    for filename, value in files.items():
+        if not os.path.isfile("data/mod/{}".format(filename)):
+            print("Creating empty {}".format(filename))
+            dataIO.save_json("data/mod/{}".format(filename), value)
+
+
 def setup(bot):
+    check_folders()
+    check_files()
     cog = Modlog(bot)
     bot.add_cog(cog)
