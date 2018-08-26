@@ -5,7 +5,10 @@ import discord
 from .utils.dataIO import dataIO
 
 default_settings = {
-    "mod-log_channel": None,
+    "moderator_roles": [],
+    "logging_channel": None,
+    "join_message": "{member.name} left the server!",
+    "leave_message": "{member.mention} joined the server!"
 }
 
 
@@ -22,9 +25,10 @@ class Modlog:
 
         try:
             modlog_channel = self.settings[str(guild.id)]['logging_channel']
+            join_message: str = self.settings[str(guild.id)]['join_message']
             channel = discord.utils.get(
                 guild.text_channels, name=modlog_channel)
-            msg = f"{member.name} left the server!"
+            msg = join_message.format(member=member)
             await channel.send(msg)
 
         except BaseException:
@@ -36,9 +40,10 @@ class Modlog:
 
         try:
             modlog_channel = self.settings[str(guild.id)]['logging_channel']
+            leave_message: str = self.settings[str(guild.id)]['leave_message']
             channel = discord.utils.get(
                 guild.text_channels, name=modlog_channel)
-            msg = f"{member.mention} joined the server!"
+            msg = leave_message.format(member=member)
             await channel.send(msg)
 
         except BaseException:

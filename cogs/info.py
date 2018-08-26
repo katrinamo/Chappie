@@ -2,21 +2,21 @@ import discord
 from discord.ext import commands
 
 
-class Serverinfo:
-    """Serverinfo commands."""
+class Info:
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.group()
     async def server(self, ctx):
+        """Serverinfo commands."""
 
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
     @server.command()
     async def info(self, ctx):
-        """Get various server info."""
+        """Get various info about the server."""
 
         guild = ctx.message.guild
 
@@ -72,7 +72,7 @@ class Serverinfo:
 
     @server.command()
     async def emojis(self, ctx):
-        """List all emojis in the guild."""
+        """List all emojis in the server."""
 
         guild = ctx.message.guild
         emojis = (str(x) for x in guild.emojis)
@@ -80,7 +80,7 @@ class Serverinfo:
 
     @server.command()
     async def avi(self, ctx):
-        """View bigger version of server's avatar."""
+        """View a bigger version of server's avatar."""
 
         guild = ctx.message.guild
         em = discord.Embed(title=None,
@@ -93,13 +93,14 @@ class Serverinfo:
 
     @commands.group(name='user')
     async def _user(self, ctx):
+        """Userinfo commands."""
 
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
     @_user.command(name='info')
     async def _info(self, ctx, *, user: discord.Member = None):
-        """Get various user info."""
+        """Get various info about a user."""
 
         if user is None:
             user = ctx.author
@@ -135,7 +136,7 @@ class Serverinfo:
 
     @_user.command(name='avi')
     async def _avi(self, ctx, *, user: discord.Member = None):
-        """View bigger version of user's avatar."""
+        """View a bigger version of a user's avatar."""
 
         if user is None:
             user = ctx.author
@@ -152,5 +153,5 @@ class Serverinfo:
 
 
 def setup(bot):
-    cog = Serverinfo(bot)
+    cog = Info(bot)
     bot.add_cog(cog)

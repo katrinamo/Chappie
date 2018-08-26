@@ -68,7 +68,7 @@ class Music:
 
     @commands.command()
     async def play(self, ctx, *, url):
-        """Plays anything youtube_dl supports."""
+        """Plays music."""
 
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop)
@@ -79,7 +79,7 @@ class Music:
 
     @commands.command()
     async def stream(self, ctx, *, url):
-        """Streams anything youtube_dl supports."""
+        """Streams music."""
 
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop, stream=True)

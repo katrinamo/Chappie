@@ -8,7 +8,6 @@ from discord.ext import commands
 
 
 class General:
-    """General commands"""
 
     def __init__(self, bot):
         self.bot = bot
@@ -160,7 +159,7 @@ class General:
 
     @commands.command()
     async def roll(self, ctx, number: int = 100):
-        """Rolls random number between 1 and X. Defaults to 100"""
+        """Rolls random number between 1 and X. Defaults to 100."""
 
         author = ctx.author
 

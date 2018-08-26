@@ -10,7 +10,9 @@ from cogs.utils import checks
 
 default_settings = {
     "moderator_roles": [],
-    "logging_channel": None
+    "logging_channel": None,
+    "join_message": "{member.name} left the server!",
+    "leave_message": "{member.mention} joined the server!"
 }
 
 

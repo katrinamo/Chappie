@@ -5,7 +5,6 @@ from discord.ext import commands
 
 
 class Images:
-    """Images commands."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -22,7 +21,7 @@ class Images:
 
     @imgur.command()
     async def top(self, ctx, search_terms: str):
-        """Retrieves the first picture from imgur."""
+        """Retrieves the first image from imgur."""
 
         search_terms = search_terms.replace(" ", "+")
         querystring = {"q": f"{search_terms}", "mature": "true"}
