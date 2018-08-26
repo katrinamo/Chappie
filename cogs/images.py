@@ -4,8 +4,8 @@ from random import randint
 from discord.ext import commands
 
 
-class Imgur:
-    """Imgur commands."""
+class Images:
+    """Images commands."""
 
     def __init__(self, bot):
         self.bot = bot
@@ -123,5 +123,5 @@ class Imgur:
 
 
 def setup(bot):
-    cog = Imgur(bot)
+    cog = Images(bot)
     bot.add_cog(cog)

@@ -15,15 +15,14 @@ description = """
 
 initial_extensions = [
     'cogs.auditlog',
-    'cogs.modlog',
     'cogs.general',
-    'cogs.gif',
-    'cogs.imgur',
+    'cogs.images',
     'cogs.mod',
     'cogs.owner',
     'cogs.player',
     'cogs.urban',
     'cogs.info',
+    'cogs.welcome',
     'cogs.custom commands.hac',
     'reddit.reddit'
 ]
