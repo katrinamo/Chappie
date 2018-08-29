@@ -19,11 +19,9 @@ initial_extensions = [
     'cogs.mod',
     'cogs.owner',
     'cogs.player',
-    'cogs.urban',
     'cogs.info',
     'cogs.welcome',
-    'cogs.custom commands.hac',
-    'reddit.reddit'
+    'cogs.custom commands.hac'
 ]
 
 
@@ -38,7 +36,6 @@ class Chappie(commands.AutoShardedBot):
 
         super().__init__(command_prefix="!",
                          description=description,
-                         pm_help=None,
                          shard_id=0,
                          status=discord.Status.dnd,
                          activity=discord.Game(name="with humans"),
@@ -115,4 +112,4 @@ class Chappie(commands.AutoShardedBot):
         await self.session.close()
 
     def run(self):
-        super().run(self.config["BOT_TOKEN"], reconnect=True)
+        super().run(self.config["BOT_TEST_TOKEN"], reconnect=True)
