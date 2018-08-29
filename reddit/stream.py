@@ -2,7 +2,6 @@ import time
 
 from prawcore.exceptions import PrawcoreException
 
-from cogs.utils.dataIO import dataIO
 from prawbot import Praw
 
 
@@ -14,32 +13,11 @@ class Stream:
     def __init__(self):
         self.praw = Praw()
 
-    def get_list_of_subs(self):
-        master_list = []
-        for channel_id, subscriptions in self.settings.items():
-            for title, sub_list in subscriptions.items():
-                for subreddit in sub_list:
-                    if subreddit not in master_list:
-                        master_list.append(subreddit)
-        return master_list
-
     def stream_task(self):
-        self.settings = dataIO.load_json("data/reddit/settings.json")
-        subscriptions_list = self.get_list_of_subs()
-        subscriptions = '+'.join(subscriptions_list)
 
-        subreddit = self.praw.subreddit(subscriptions)
+        subreddit = self.praw.subreddit('healthanxiety')
 
         for submission in subreddit.stream.submissions():
-
-            # Check if subscriptions have updated. If so, restart.
-            self.settings = dataIO.load_json("data/reddit/settings.json")
-            subscriptions_list = self.get_list_of_subs()
-            check_subscriptions = '+'.join(subscriptions_list)
-
-            if check_subscriptions != subscriptions:
-                raise SubscriptionsUpdated
-
             self.insert_subreddit(submission.subreddit)
             self.insert_author(submission.author)
             self.insert_submission(submission)
@@ -103,11 +81,10 @@ class Stream:
                 running = False
             except SubscriptionsUpdated:
                 print("Subscriptions have updated, restarting...")
-                time.sleep(10)
+                time.sleep(1)
             except PrawcoreException:
                 print("PrawcoreException occurred, restarting...")
                 time.sleep(10)
             except BaseException:
-                print("Some type of exception occured, restarting...")
-                time.sleep(10)
+                time.sleep(1)
         return 0
