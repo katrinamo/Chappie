@@ -11,8 +11,8 @@ from cogs.utils import checks
 default_settings = {
     "moderator_roles": [],
     "logging_channel": None,
-    "join_message": "{member.name} left the server!",
-    "leave_message": "{member.mention} joined the server!"
+    "join_message": "{member.name} joined the server!",
+    "leave_message": "{member.mention} left the server!"
 }
 
 
@@ -121,7 +121,7 @@ class Mod:
     @commands.command()
     @checks.has_mod_role_or_heirachy()
     async def tempmute(self, ctx, user: discord.Member, minutes: int, reason: str = 'Unspecified'):
-        """Termporarily mutes user."""
+        """Temporarily mutes user."""
 
         guild = ctx.guild
         author = ctx.author
