@@ -166,6 +166,7 @@ class General:
         if number > 1:
             n = randint(1, number)
             await ctx.send(f"{author.mention} :game_die: {n} :game_die:")
+            
         else:
             await ctx.send(f"{author.mention}, maybe try a number higher than 1?")
 
@@ -224,6 +225,7 @@ class General:
                                                description=f"```\n{encoded}\n```"))
         except discord.Forbidden:
             pass
+        
         except Exception as e:
             await ctx.send(f"Could not encode.\n`{e}`")
 
@@ -276,8 +278,10 @@ class General:
                 em.set_footer(text=f"Example: {example}")
 
                 await ctx.send(embed=em)
+                
             else:
                 await ctx.send("Your search terms gave no results.")
+                
         except BaseException:
             await ctx.send("Error.")
 
