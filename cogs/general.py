@@ -119,6 +119,7 @@ class General:
         if message.split(' ', 1)[0].isdigit():
             spaces = int(message.split(' ', 1)[0]) * ' '
             message = message.split(' ', 1)[1].strip()
+            
         else:
             spaces = ' '
         spaced_message = spaces.join(list(message))
@@ -209,10 +210,22 @@ class General:
         session = self.bot.session
         async with session.get(url) as r:
             t = await r.json()
+            
         if not t['success']:
-            return await ctx.send(
-                embed=discord.Embed(color=0xC0D3C5, description="Failed to successfully get the image."))
-        await ctx.send(embed=discord.Embed(color=0xC0D3C5).set_image(url=t['message']))
+            em = discord.Embed(title=None,
+                               description="Failed to successfully get the image.",
+                               url=None,
+                               color=discord.Color.dark_blue())
+            
+            return await ctx.send(embed=em)
+        
+        em = discord.Embed(title=None,
+                           description=None,
+                           url=None,
+                           color=discord.Color.dark_blue())
+        em.set_image(url=t['message])
+                           
+        await ctx.send(embed=em)
 
     @commands.command(name="b64", aliases=['b64encode', 'base64encode'])
     @commands.cooldown(1, 7, commands.BucketType.user)
