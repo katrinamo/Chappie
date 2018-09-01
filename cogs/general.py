@@ -5,6 +5,7 @@ from random import choice, randint
 
 import discord
 from discord.ext import commands
+import json
 
 
 class General:
@@ -223,7 +224,7 @@ class General:
                            description=None,
                            url=None,
                            color=discord.Color.dark_blue())
-        em.set_image(url=t['message])
+        em.set_image(url=t['message'])
                            
         await ctx.send(embed=em)
 
