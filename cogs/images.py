@@ -19,12 +19,12 @@ class Images:
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
-    @imgur.command()
-    async def top(self, ctx, search_terms: str):
+    @imgur.command(name='top')
+    async def imgur_top(self, ctx, search_terms: str):
         """Retrieves the first image from imgur."""
 
         search_terms = search_terms.replace(" ", "+")
-        querystring = {"q": f"{search_terms}", "mature": "true"}
+        querystring = {"q": f"{search_terms}"}
         headers = {"Authorization": f"Client-ID {self.CLIENT_ID}"}
         url = f"https://api.imgur.com/3/gallery/search/viral/all/0"
 
@@ -43,12 +43,12 @@ class Images:
         except BaseException:
             await ctx.send("Error.")
 
-    @imgur.command()
-    async def random(self, ctx, *, search_terms: str):
+    @imgur.command(name='random')
+    async def imgur_random(self, ctx, *, search_terms: str):
         """Retrieves a random image from Imgur."""
 
         search_terms = search_terms.replace(" ", "+")
-        querystring = {"q": f"{search_terms}", "mature": "true"}
+        querystring = {"q": f"{search_terms}"}
         headers = {"Authorization": f"Client-ID {self.CLIENT_ID}"}
         url = f"https://api.imgur.com/3/gallery/search/time/all/0"
 
@@ -75,8 +75,8 @@ class Images:
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
-    @gif.command()
-    async def top(self, ctx, *, search_terms: str):
+    @gif.command(name='top')
+    async def gif_top(self, ctx, *, search_terms: str):
         """Retrieves the first gif from giphy."""
 
         search_terms = search_terms.replace(" ", "+")
@@ -97,8 +97,8 @@ class Images:
         except BaseException:
             await ctx.send("Error.")
 
-    @gif.command()
-    async def random(self, ctx, search_terms: str):
+    @gif.command(name='random')
+    async def gif_random(self, ctx, search_terms: str):
         """Retrieves a random gif from giphy."""
 
         search_terms = search_terms.replace(" ", "+")
