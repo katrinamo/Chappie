@@ -24,7 +24,7 @@ class Mod:
         self.settings = dataIO.load_json("data/mod/settings.json")
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, user: discord.Member, *, reason: str = 'Unspecified'):
         """Bans user."""
 
@@ -44,7 +44,7 @@ class Mod:
         await guild.ban(user=user, reason=reason)
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(ban_members=True)
     async def tempban(self, ctx, user: discord.Member, minutes: int, *, reason: str = 'Unspecified'):
         """Temporarily bans user."""
 
@@ -67,7 +67,7 @@ class Mod:
         await guild.unban(user=user, reason="Temporary ban lifted.")
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, user: discord.Member, *, reason: str = None):
         """Kicks user."""
 
@@ -85,7 +85,7 @@ class Mod:
         await guild.kick(user=user, reason=reason)
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(manage_messages=True, read_message_history=True)
     async def clear(self, ctx, amount: int, channel: discord.TextChannel = None):
         """Clear X amount of messages from channel."""
 
@@ -100,7 +100,7 @@ class Mod:
         await msg.delete()
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(manage_roles=True)
     async def mute(self, ctx, user: discord.Member, *, reason: str = 'Unspecified'):
         """Mutes user."""
 
@@ -119,7 +119,7 @@ class Mod:
         await ctx.send(f"{user.mention} ({user.id}) is now muted for '**{reason}**', alright?")
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(manage_roles=True)
     async def tempmute(self, ctx, user: discord.Member, minutes: int, reason: str = 'Unspecified'):
         """Temporarily mutes user."""
 
@@ -143,7 +143,7 @@ class Mod:
         await user.remove_roles(mute_role)
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(manage_roles=True)
     async def unmute(self, ctx, user: discord.Member):
         """Unmutes user."""
 
@@ -162,7 +162,7 @@ class Mod:
         await ctx.send(f"{user.mention} is now unmuted.")
 
     @commands.command()
-    @checks.has_mod_role_or_heirachy()
+    @commands.has_permissions(manage_nicknames=True)
     async def nickname(self, ctx, user: discord.Member, *, nickname):
         """Changes nickname of user."""
 
@@ -179,6 +179,7 @@ class Mod:
             await ctx.send(f"{user.mention} is now known as `{user.nick}`.")
 
     @commands.command()
+    @commands.is_owner()
     async def modrole(self, ctx, role: discord.Role):
         """Sets a role as a server's moderation role."""
 
@@ -193,6 +194,7 @@ class Mod:
             await ctx.send(f"`{role.name}` is already a moderator's role for this server.")
 
     @commands.command()
+    @commands.is_owner()
     async def logging(self, ctx, channel: discord.TextChannel):
         """Sets a channel as the server's logging channel."""
 
