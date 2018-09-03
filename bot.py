@@ -110,8 +110,8 @@ class Chappie(commands.AutoShardedBot):
 
     async def close(self):
         await self.db.disconnect()
-        await super().close()
         await self.session.close()
+        await super().close()
 
     def run(self):
         super().run(self.config["BOT_TEST_TOKEN"], reconnect=True)
