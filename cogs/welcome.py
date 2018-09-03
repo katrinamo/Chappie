@@ -28,7 +28,7 @@ class Modlog:
             join_message: str = self.settings[str(guild.id)]['join_message']
             channel = discord.utils.get(
                 guild.text_channels, name=logging_channel)
-            msg = leave_message.format(member=member)
+            msg = join_message.format(member=member)
             await channel.send(msg)
 
         except BaseException:
@@ -43,7 +43,7 @@ class Modlog:
             leave_message: str = self.settings[str(guild.id)]['leave_message']
             channel = discord.utils.get(
                 guild.text_channels, name=logging_channel)
-            msg = join_message.format(member=member)
+            msg = leave_message.format(member=member)
             await channel.send(msg)
 
         except BaseException:
