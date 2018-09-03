@@ -201,13 +201,13 @@ class General:
 
         if author.id not in self.stopwatches:
             self.stopwatches[author.id] = int(time.perf_counter())
-            msg = f"author.mention, your stopwatch started!"
+            msg = f"{author.mention}, your stopwatch started!"
 
         else:
             tmp = abs(self.stopwatches[author.id] - int(time.perf_counter()))
             tmp = str(datetime.timedelta(seconds=tmp))
             self.stopwatches.pop(author.id, None)
-            msg = f"author.mention, your stopwatch stopped! Time: **{tmp}**"
+            msg = f"{author.mention}, your stopwatch stopped! Time: **{tmp}**"
 
         em = discord.Embed(title=None,
                            description=msg,
