@@ -14,9 +14,11 @@ class Info:
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
-    @server.command()
-    async def info(self, ctx):
+    @server.command(name='info')
+    async def server_info(self, ctx):
         """Get various info about the server."""
+
+        await ctx.message.delete()
 
         guild = ctx.message.guild
 
@@ -70,37 +72,45 @@ class Info:
 
         await ctx.send(embed=em)
 
-    @server.command()
-    async def emojis(self, ctx):
+    @server.command(name='emojis')
+    async def server_emojis(self, ctx):
         """List all emojis in the server."""
+
+        await ctx.message.delete()
 
         guild = ctx.message.guild
         emojis = (str(x) for x in guild.emojis)
+
         await ctx.send("".join(emojis))
 
-    @server.command()
-    async def avi(self, ctx):
+    @server.command(name='avi')
+    async def server_avi(self, ctx):
         """View a bigger version of server's avatar."""
 
+        await ctx.message.delete()
+
         guild = ctx.message.guild
+
         em = discord.Embed(title=None,
                            description=None,
                            url=None,
-                           timestamp=ctx.message.created_at,
-                           color=discord.Color.red())
+                           color=0xC0D3C5)
         em.set_image(url=guild.icon_url)
+
         await ctx.send(embed=em)
 
     @commands.group(name='user')
-    async def _user(self, ctx):
+    async def user(self, ctx):
         """Userinfo commands."""
 
         if ctx.invoked_subcommand is None:
             await self.bot.send_cmd_help(ctx)
 
-    @_user.command(name='info')
-    async def _info(self, ctx, *, user: discord.Member = None):
+    @user.command(name='info')
+    async def user_info(self, ctx, *, user: discord.Member = None):
         """Get various info about a user."""
+
+        await ctx.message.delete()
 
         if user is None:
             user = ctx.author
@@ -131,25 +141,25 @@ class Info:
         em.set_author(
             name=user.display_name,
             icon_url=user.avatar_url)
-        await ctx.send(embed=em)
-        await ctx.message.delete()
 
-    @_user.command(name='avi')
-    async def _avi(self, ctx, *, user: discord.Member = None):
+        await ctx.send(embed=em)
+
+    @user.command(name='avi')
+    async def user_avi(self, ctx, *, user: discord.Member = None):
         """View a bigger version of a user's avatar."""
+
+        await ctx.message.delete()
 
         if user is None:
             user = ctx.author
 
-        em = discord.Embed(
-            title=None,
-            description=None,
-            url=None,
-            timestamp=ctx.message.created_at,
-            color=discord.Color.blue())
+        em = discord.Embed(title=None,
+                           description=None,
+                           url=None,
+                           color=0xC0D3C5)
         em.set_image(url=user.avatar_url)
+
         await ctx.send(embed=em)
-        await ctx.message.delete()
 
 
 def setup(bot):
