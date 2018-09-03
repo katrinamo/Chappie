@@ -34,6 +34,7 @@ class General:
             "My sources say no",
             "Outlook not so good",
             "Very doubtful"]
+
         self.regionals = {
             'a': '\N{REGIONAL INDICATOR SYMBOL LETTER A}',
             'b': '\N{REGIONAL INDICATOR SYMBOL LETTER B}',
@@ -78,25 +79,41 @@ class General:
     async def ping(self, ctx):
         """Pong."""
 
-        await ctx.send("Pong.")
+        em = discord.Embed(title=None,
+                           description='Pong',
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def choose(self, ctx, *, choices: str):
         """Chooses a random choice."""
 
         chosen = choice(choices.split("|"))
-        await ctx.send(chosen)
+        
+        em = discord.Embed(title=None,
+                           description=chosen,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command(name="8ball")
     async def _8ball(self, ctx, *, question: str):
         """Let the 8ball decide your fate."""
 
-        if not question.endswith("?"):
-            await ctx.send("This is not a question. Try adding a '?'")
-            return
+        if not question.endswith('?'):
+            return await ctx.send("This is not a question. Try adding a '?'")
 
         answer = choice(self.ball)
-        await ctx.send(answer)
+
+        em = discord.Embed(title=None,
+                           description=answer,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def react(self, ctx, *, message):
@@ -109,7 +126,12 @@ class General:
             "!", "?"] else x for x in message]
         regional_output = '\u200b'.join(regional_list)
 
-        await ctx.send(regional_output)
+        em = discord.Embed(title=None,
+                           description=regional_output,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def space(self, ctx, *, message):
@@ -123,9 +145,15 @@ class General:
             
         else:
             spaces = ' '
+
         spaced_message = spaces.join(list(message))
 
-        await ctx.send(spaced_message)
+        em = discord.Embed(title=None,
+                           description=spaced_message,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def cookie(self, ctx, user: discord.Member):
@@ -134,14 +162,28 @@ class General:
         sender = ctx.author.mention
         receiver = user.mention
 
-        await ctx.send(f"**{receiver}**, you've been given a cookie by **{sender}**.:cookie:")
+        msg = f"**{receiver}**, you've been given a cookie by **{sender}**.:cookie:"
+
+        em = discord.Embed(title=None,
+                           description=msg,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def lmgtfy(self, ctx, *, search_terms: str):
         """Creates a lmgtfy link."""
 
         search_terms = search_terms.replace(" ", "+")
-        await ctx.send("https://lmgtfy.com/?q={}".format(search_terms))
+        url = f"https://lmgtfy.com/?q={search_terms}"
+
+        em = discord.Embed(title='Link',
+                           description=search_terms,
+                           url=url,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     async def stopwatch(self, ctx):
@@ -151,26 +193,39 @@ class General:
 
         if author.id not in self.stopwatches:
             self.stopwatches[author.id] = int(time.perf_counter())
-            await ctx.send(author.mention + ", your stopwatch started!")
+            msg = f"author.mention, your stopwatch started!"
 
         else:
             tmp = abs(self.stopwatches[author.id] - int(time.perf_counter()))
             tmp = str(datetime.timedelta(seconds=tmp))
-            await ctx.send(author.mention + ", your stopwatch stopped! Time: **" + tmp + "**")
             self.stopwatches.pop(author.id, None)
+            msg = f"author.mention, your stopwatch stopped! Time: **{tmp}**"
+
+        em = discord.Embed(title=None,
+                           description=msg,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def roll(self, ctx, number: int = 100):
         """Rolls random number between 1 and X. Defaults to 100."""
 
-        author = ctx.author
-
         if number > 1:
             n = randint(1, number)
-            await ctx.send(f"{author.mention} :game_die: {n} :game_die:")
+            msg = f":game_die: {n} :game_die:"
             
         else:
-            await ctx.send(f"{author.mention}, maybe try a number higher than 1?")
+            msg = f"Maybe try a number higher than 1?"
+
+        em = discord.Embed(title=None,
+                           description=msg,
+                           url=None,
+                           color=0xC0D3C5)
+
+        await ctx.send(embed=em)
 
     @commands.command()
     @commands.cooldown(1, 7, commands.BucketType.user)
@@ -201,49 +256,6 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
-    @commands.cooldown(1, 10, commands.BucketType.user)
-    async def tweet(self, ctx, username: str, *, text: str):
-        """Tweet as someone."""
-
-        url = f"https://nekobot.xyz/api/imagegen?type=tweet&username={username}&text={text}"
-
-        await ctx.trigger_typing()
-        session = self.bot.session
-        async with session.get(url) as r:
-            t = await r.json()
-            
-        if not t['success']:
-            em = discord.Embed(title=None,
-                               description="Failed to successfully get the image.",
-                               url=None,
-                               color=discord.Color.dark_blue())
-            
-            return await ctx.send(embed=em)
-        
-        em = discord.Embed(title=None,
-                           description=None,
-                           url=None,
-                           color=discord.Color.dark_blue())
-        em.set_image(url=t['message'])
-                           
-        await ctx.send(embed=em)
-
-    @commands.command(name="b64", aliases=['b64encode', 'base64encode'])
-    @commands.cooldown(1, 7, commands.BucketType.user)
-    async def base_encode(self, ctx, *, encode_to: str):
-        """Encode text with Base64."""
-
-        try:
-            encoded = base64.b64encode(encode_to.encode())
-            await ctx.send(embed=discord.Embed(color=0xC0D3C5, title=f"{encode_to}",
-                                               description=f"```\n{encoded}\n```"))
-        except discord.Forbidden:
-            pass
-        
-        except Exception as e:
-            await ctx.send(f"Could not encode.\n`{e}`")
-
-    @commands.command()
     @commands.cooldown(1, 7, commands.BucketType.user)
     async def joke(self, ctx):
         """Sends a joke."""
@@ -258,13 +270,14 @@ class General:
 
             em = discord.Embed(
                 title=None,
-                description=f"**{t['joke']}**",
+                description=f"{t['joke']}",
                 url=None,
                 color=0xC0D3C5)
 
             await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def urban(self, ctx, *, search_terms: str):
         """Urban Dictionary search."""
 
@@ -287,7 +300,7 @@ class General:
                 em = discord.Embed(title=f"{word}",
                                    description=definition,
                                    url=url,
-                                   color=discord.Color.dark_blue())
+                                   color=0xC0D3C5)
                 em.set_author(name="According to Urban Dictionary")
                 em.set_footer(text=f"Example: {example}")
 
