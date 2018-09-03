@@ -76,6 +76,7 @@ class General:
             '?': '\u2753'}
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def ping(self, ctx):
         """Pong."""
 
@@ -87,11 +88,12 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def choose(self, ctx, *, choices: str):
         """Chooses a random choice."""
 
         chosen = choice(choices.split("|"))
-        
+
         em = discord.Embed(title=None,
                            description=chosen,
                            url=None,
@@ -100,6 +102,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command(name="8ball")
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def _8ball(self, ctx, *, question: str):
         """Let the 8ball decide your fate."""
 
@@ -116,6 +119,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def react(self, ctx, *, message):
         """Replace letters with regional indicator emojis."""
 
@@ -134,6 +138,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def space(self, ctx, *, message):
         """Add spaces between each letter."""
 
@@ -156,6 +161,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def cookie(self, ctx, user: discord.Member):
         """Give a cookie to someone!"""
 
@@ -172,6 +178,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def lmgtfy(self, ctx, *, search_terms: str):
         """Creates a lmgtfy link."""
 
@@ -186,6 +193,7 @@ class General:
         await ctx.send(embed=em)
 
     @commands.command()
+    @commands.cooldown(1, 7, commands.BucketType.user)
     async def stopwatch(self, ctx):
         """Starts/stops stopwatch."""
 
